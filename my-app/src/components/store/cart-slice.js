@@ -10,9 +10,22 @@ const cartSlice = createSlice({
     reducers: {
         //action arg carries extra info once dispatched
         //payload prop contain any extra data you add to action
+        //payload property sets by redux toolkit
         addItemTocart(state, action){
             const item = action.payload;
-            const totalQuantity = 
+            const existingItem = state.items.find((item) => item.id === newItem.id);
+            if(!existingItem){
+                state.items.push({
+                    itemId: newItem.id,
+                    price: newItem.price,
+                    quantity: 1,
+                    totalPrice: newItem.price,
+                    name: newItem.title
+                });
+            } else {
+                existingItem.quantity++;
+                existingItem.totalPrice = existingItem.totalPrice + newItem.price;
+            }
         },
         removeItemFromCart(){}
     }
