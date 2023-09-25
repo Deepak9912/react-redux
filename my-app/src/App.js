@@ -6,6 +6,8 @@ import Products from './components/Shop/Products';
 import { uiActions } from './components/store/ui-slice';
 import Notification from './components/UI/Notification';
 
+let isInitial = true;
+
 function App() {
   const dispatch = useDispatch()
   //to useSelector we need to pass a function which receives redux state
@@ -40,8 +42,13 @@ function App() {
         title: 'Success...',
         message: 'Sent cart data successfully!',
       }));
-
     };
+
+    if(isInitial){
+      isInitial = false;
+      return;
+    }
+
     sendCartData().catch((error) => {
       dispatch(uiActions.showNotification({
         status: 'error',
